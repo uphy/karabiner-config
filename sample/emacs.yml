@@ -1,0 +1,188 @@
+title: Emacs
+maintainers:
+  - uphy
+rules:
+  - description: Emacs
+    manipulators:
+      - scope:
+          description: Emacs Target Applications
+          conditions:
+            - app_unless:
+                identifiers:
+                  - ^com\.jetbrains\.intellij$
+                  - ^org\.gnu\.Emacs$
+                  - ^com\.apple\.Terminal$
+                  - ^com\.googlecode\.iterm2$
+                  - ^org\.vim\.
+                  - ^org\.x\.X11$
+                  - ^com\.apple\.x11$
+                  - ^org\.macports\.X11$
+                  - ^com\.microsoft\.VSCode$
+          children:
+            # C-x
+            - from:
+                key: C-x
+              to:
+                - set: 'emacs_cx = 1'
+              to_delayed_action:
+                to_if_invoked:
+                  - set: 'emacs_cx = 0'
+            # C-spacebar
+            - from:
+                key: C-spacebar
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - set: 'emacs_set_mark = 0'
+                'emacs_set_mark == 0':
+                  to:
+                    - set: emacs_set_mark = 1
+            # C-g
+            - from:
+                key: C-g
+              to:
+                - set: 'emacs_set_mark = 0'
+                - set: 'emacs_cx = 0'
+                - key: left_arrow
+                - key: right_arrow
+                - key: escape
+            # Line start, end
+            - from:
+                key: C-a
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-home
+                'emacs_set_mark == 0':
+                  to:
+                    - key: home
+            - from:
+                key: C-e
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-end
+                'emacs_set_mark == 0':
+                  to:
+                    - key: end
+            # Move
+            - from:
+                key: C-b
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-left_arrow
+                'emacs_set_mark == 0':
+                  to:
+                    - key: left_arrow
+            - from:
+                key: A-b
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-A-left_arrow
+                'emacs_set_mark == 0':
+                  to:
+                    - key: A-left_arrow
+            - from:
+                key: C-f
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-right_arrow
+                'emacs_set_mark == 0':
+                  to:
+                    - key: right_arrow
+            - from:
+                key: A-f
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-A-right_arrow
+                'emacs_set_mark == 0':
+                  to:
+                    - key: A-right_arrow
+            - from:
+                key: C-p
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-up_arrow
+                'emacs_set_mark == 0':
+                  to:
+                    - key: up_arrow
+            - from:
+                key: C-n
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-down_arrow
+                'emacs_set_mark == 0':
+                  to:
+                    - key: down_arrow
+            # Page
+            - from:
+                key: C-v
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-page_down
+                'emacs_set_mark == 0':
+                  to:
+                    - key: page_down
+            - from:
+                key: A-v
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-page_up
+                'emacs_set_mark == 0':
+                  to:
+                    - key: page_up
+            # Copy/Paste
+            - from:
+                key: A-w
+              to:
+                - key: command-c
+            - from:
+                key: C-y
+              to:
+                - key: command-v
+            - from:
+                key: C-w
+              to:
+                - key: command-x
+                - set: emacs_set_mark = 0
+            - from:
+                key: C-k
+              to:
+                - key: s-end
+                - key: command-x
+            # misc
+            - from:
+                key: C-h
+              to:
+                - key: delete_or_backspace
+            - from:
+                key: C-slash
+              to:
+                - key: command-z
+            - from:
+                key: C-s
+              switch:
+                'emacs_cx == 1':
+                  to:
+                    - key: command-s
+                    - set: emacs_set_cx = 0
+                'emacs_cx == 0':
+                  to:
+                    - key: command-f
+            - from:
+                key: C-m
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-return_or_enter
+                'emacs_set_mark == 0':
+                  to:
+                    - key: return_or_enter

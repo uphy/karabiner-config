@@ -1,0 +1,29 @@
+{
+   "maintainers": [
+      "uphy"
+   ],
+   "rules": [
+      {
+         "description": "Control+H to newline",
+         "manipulators": [
+            {
+               "from": {
+                  "key_code": "m",
+                  "modifiers": {
+                     "mandatory": [
+                        "control"
+                     ]
+                  }
+               },
+               "to": [
+                  {
+                     "key_code": "return_or_enter"
+                  }
+               ],
+               "type": "basic"
+            }
+         ]
+      }
+   ],
+   "title": "Control+M to newline"
+}

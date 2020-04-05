@@ -1,0 +1,10 @@
+title: Control+M to newline
+maintainers:
+  - uphy
+rules:
+  - description: Control+H to newline
+    manipulators:
+      - from:
+          key: C-m
+        to:
+          - key: return_or_enter
