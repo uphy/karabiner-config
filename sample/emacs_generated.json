@@ -180,9 +180,6 @@
                         "name": "emacs_cg",
                         "value": 1
                      }
-                  },
-                  {
-                     "key_code": "escape"
                   }
                ],
                "to_delayed_action": {

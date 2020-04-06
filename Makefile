@@ -32,3 +32,7 @@ clean:
 .PHONY: test
 test:
 	go test -v ./...
+
+.PHONY: keys
+keys:
+	@curl -sS https://raw.githubusercontent.com/pqrs-org/Karabiner-Elements/master/src/apps/PreferencesWindow/Resources/simple_modifications.json | jq -r '.[].data.key_code' | grep -v null
