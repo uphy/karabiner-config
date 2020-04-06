@@ -186,43 +186,6 @@
                   {
                      "name": "emacs_set_mark",
                      "type": "variable_if",
-                     "value": 0
-                  },
-                  {
-                     "bundle_identifiers": [
-                        "^com\\.jetbrains\\.intellij$",
-                        "^org\\.gnu\\.Emacs$",
-                        "^com\\.apple\\.Terminal$",
-                        "^com\\.googlecode\\.iterm2$",
-                        "^org\\.vim\\.",
-                        "^org\\.x\\.X11$",
-                        "^com\\.apple\\.x11$",
-                        "^org\\.macports\\.X11$",
-                        "^com\\.microsoft\\.VSCode$"
-                     ],
-                     "type": "frontmost_application_unless"
-                  }
-               ],
-               "from": {
-                  "key_code": "a",
-                  "modifiers": {
-                     "mandatory": [
-                        "control"
-                     ]
-                  }
-               },
-               "to": [
-                  {
-                     "key_code": "home"
-                  }
-               ],
-               "type": "basic"
-            },
-            {
-               "conditions": [
-                  {
-                     "name": "emacs_set_mark",
-                     "type": "variable_if",
                      "value": 1
                   },
                   {
@@ -250,47 +213,11 @@
                },
                "to": [
                   {
-                     "key_code": "home",
+                     "key_code": "a",
                      "modifiers": [
-                        "shift"
-                     ]
-                  }
-               ],
-               "type": "basic"
-            },
-            {
-               "conditions": [
-                  {
-                     "name": "emacs_set_mark",
-                     "type": "variable_if",
-                     "value": 0
-                  },
-                  {
-                     "bundle_identifiers": [
-                        "^com\\.jetbrains\\.intellij$",
-                        "^org\\.gnu\\.Emacs$",
-                        "^com\\.apple\\.Terminal$",
-                        "^com\\.googlecode\\.iterm2$",
-                        "^org\\.vim\\.",
-                        "^org\\.x\\.X11$",
-                        "^com\\.apple\\.x11$",
-                        "^org\\.macports\\.X11$",
-                        "^com\\.microsoft\\.VSCode$"
-                     ],
-                     "type": "frontmost_application_unless"
-                  }
-               ],
-               "from": {
-                  "key_code": "e",
-                  "modifiers": {
-                     "mandatory": [
+                        "shift",
                         "control"
                      ]
-                  }
-               },
-               "to": [
-                  {
-                     "key_code": "end"
                   }
                ],
                "type": "basic"
@@ -327,9 +254,10 @@
                },
                "to": [
                   {
-                     "key_code": "end",
+                     "key_code": "e",
                      "modifiers": [
-                        "shift"
+                        "shift",
+                        "control"
                      ]
                   }
                ],

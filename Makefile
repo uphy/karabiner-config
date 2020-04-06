@@ -11,6 +11,10 @@ all: clean build
 install:
 	GOOS=darwin GOARCH=amd64 go install -ldflags=$(BUILD_LDFLAGS)
 
+.PHONY: generate
+generate:
+	find sample -name "*.yml" | sed -e 's/\.yml$$//' | xargs -I% karabiner-config "%.yml" "%_generated.json"
+
 .PHONY: build
 build:
 	GOOS=darwin GOARCH=amd64 go build -ldflags=$(BUILD_LDFLAGS) -o $(BIN)/karabiner-config; \

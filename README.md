@@ -20,7 +20,7 @@ Generate karabiner-Elements configuration file with simple syntax.
 
 ### Binary
 
-See release page.
+See [release](https://github.com/uphy/karabiner-config/releases) page.
 
 ### Build
 

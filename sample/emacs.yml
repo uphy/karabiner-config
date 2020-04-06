@@ -52,19 +52,13 @@ rules:
               switch:
                 'emacs_set_mark == 1':
                   to:
-                    - key: S-home
-                'emacs_set_mark == 0':
-                  to:
-                    - key: home
+                    - key: S-C-a
             - from:
                 key: C-e
               switch:
                 'emacs_set_mark == 1':
                   to:
-                    - key: S-end
-                'emacs_set_mark == 0':
-                  to:
-                    - key: end
+                    - key: S-C-e
             # Move
             - from:
                 key: C-b
