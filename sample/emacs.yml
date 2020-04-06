@@ -43,8 +43,7 @@ rules:
               to:
                 - set: 'emacs_set_mark = 0'
                 - set: 'emacs_cx = 0'
-                - key: left_arrow
-                - key: right_arrow
+                - set: 'emacs_ck = 0'
                 - key: escape
             # Line start, end
             - from:
@@ -138,10 +137,13 @@ rules:
                 key: A-w
               to:
                 - key: command-c
+                - set: emacs_set_mark = 0
+                - key: right_arrow
             - from:
                 key: C-y
               to:
                 - key: command-v
+                - set: emacs_set_mark = 0
             - from:
                 key: C-w
               to:
@@ -150,19 +152,34 @@ rules:
             - from:
                 key: C-k
               to:
-                - key: s-end
+                - key: S-C-e
                 - key: command-x
+                - set: emacs_set_mark = 0
+              switch:
+                'emacs_ck == 0':
+                  to:
+                    - set: 'emacs_ck = 1'
+                'emacs_ck == 1':
+                  to:
+                    - key: C-d
+              to_delayed_action:
+                to_if_invoked:
+                  - set: 'emacs_ck = 0'
             # misc
             - from:
                 key: C-h
               to:
                 - key: delete_or_backspace
+                - set: emacs_set_mark = 0
             - from:
                 key: C-slash
               to:
                 - key: command-z
+                - set: emacs_set_mark = 0
             - from:
                 key: C-s
+              to:
+                - set: emacs_set_mark = 0
               switch:
                 'emacs_cx == 1':
                   to:
@@ -173,6 +190,8 @@ rules:
                     - key: command-f
             - from:
                 key: C-m
+              to:
+                - set: emacs_set_mark = 0
               switch:
                 'emacs_set_mark == 1':
                   to:

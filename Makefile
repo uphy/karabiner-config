@@ -12,8 +12,12 @@ install:
 	GOOS=darwin GOARCH=amd64 go install -ldflags=$(BUILD_LDFLAGS)
 
 .PHONY: generate
-generate:
+generate: install
 	find sample -name "*.yml" | sed -e 's/\.yml$$//' | xargs -I% karabiner-config "%.yml" "%_generated.json"
+
+.PHONY: emacs
+emacs: generate
+	karabiner-config sample/emacs.yml ~/.config/karabiner/karabiner.json
 
 .PHONY: build
 build:

@@ -170,10 +170,10 @@
                      }
                   },
                   {
-                     "key_code": "left_arrow"
-                  },
-                  {
-                     "key_code": "right_arrow"
+                     "set_variable": {
+                        "name": "emacs_ck",
+                        "value": 0
+                     }
                   },
                   {
                      "key_code": "escape"
@@ -918,6 +918,15 @@
                      "modifiers": [
                         "command"
                      ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  },
+                  {
+                     "key_code": "right_arrow"
                   }
                ],
                "type": "basic"
@@ -953,6 +962,12 @@
                      "modifiers": [
                         "command"
                      ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
                   }
                ],
                "type": "basic"
@@ -1001,6 +1016,11 @@
             {
                "conditions": [
                   {
+                     "name": "emacs_ck",
+                     "type": "variable_if",
+                     "value": 0
+                  },
+                  {
                      "bundle_identifiers": [
                         "^com\\.jetbrains\\.intellij$",
                         "^org\\.gnu\\.Emacs$",
@@ -1025,9 +1045,10 @@
                },
                "to": [
                   {
-                     "key_code": "end",
+                     "key_code": "e",
                      "modifiers": [
-                        "shift"
+                        "shift",
+                        "control"
                      ]
                   },
                   {
@@ -1035,8 +1056,99 @@
                      "modifiers": [
                         "command"
                      ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_ck",
+                        "value": 1
+                     }
                   }
                ],
+               "to_delayed_action": {
+                  "to_if_invoked": [
+                     {
+                        "set_variable": {
+                           "name": "emacs_ck",
+                           "value": 0
+                        }
+                     }
+                  ]
+               },
+               "type": "basic"
+            },
+            {
+               "conditions": [
+                  {
+                     "name": "emacs_ck",
+                     "type": "variable_if",
+                     "value": 1
+                  },
+                  {
+                     "bundle_identifiers": [
+                        "^com\\.jetbrains\\.intellij$",
+                        "^org\\.gnu\\.Emacs$",
+                        "^com\\.apple\\.Terminal$",
+                        "^com\\.googlecode\\.iterm2$",
+                        "^org\\.vim\\.",
+                        "^org\\.x\\.X11$",
+                        "^com\\.apple\\.x11$",
+                        "^org\\.macports\\.X11$",
+                        "^com\\.microsoft\\.VSCode$"
+                     ],
+                     "type": "frontmost_application_unless"
+                  }
+               ],
+               "from": {
+                  "key_code": "k",
+                  "modifiers": {
+                     "mandatory": [
+                        "control"
+                     ]
+                  }
+               },
+               "to": [
+                  {
+                     "key_code": "e",
+                     "modifiers": [
+                        "shift",
+                        "control"
+                     ]
+                  },
+                  {
+                     "key_code": "x",
+                     "modifiers": [
+                        "command"
+                     ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  },
+                  {
+                     "key_code": "d",
+                     "modifiers": [
+                        "control"
+                     ]
+                  }
+               ],
+               "to_delayed_action": {
+                  "to_if_invoked": [
+                     {
+                        "set_variable": {
+                           "name": "emacs_ck",
+                           "value": 0
+                        }
+                     }
+                  ]
+               },
                "type": "basic"
             },
             {
@@ -1067,6 +1179,12 @@
                "to": [
                   {
                      "key_code": "delete_or_backspace"
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
                   }
                ],
                "type": "basic"
@@ -1102,6 +1220,12 @@
                      "modifiers": [
                         "command"
                      ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
                   }
                ],
                "type": "basic"
@@ -1137,6 +1261,12 @@
                   }
                },
                "to": [
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  },
                   {
                      "key_code": "f",
                      "modifiers": [
@@ -1177,6 +1307,12 @@
                   }
                },
                "to": [
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  },
                   {
                      "key_code": "s",
                      "modifiers": [
@@ -1224,6 +1360,12 @@
                },
                "to": [
                   {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  },
+                  {
                      "key_code": "return_or_enter"
                   }
                ],
@@ -1260,6 +1402,12 @@
                   }
                },
                "to": [
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  },
                   {
                      "key_code": "return_or_enter",
                      "modifiers": [
