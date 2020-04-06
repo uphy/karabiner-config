@@ -44,7 +44,10 @@ rules:
                 - set: 'emacs_set_mark = 0'
                 - set: 'emacs_cx = 0'
                 - set: 'emacs_ck = 0'
-                - key: escape
+                - set: 'emacs_cg = 1'
+              to_delayed_action:
+                to_if_invoked:
+                  - set: 'emacs_cg = 0'
             # Line start, end
             - from:
                 key: C-a
@@ -80,6 +83,10 @@ rules:
             - from:
                 key: C-f
               switch:
+                'emacs_cx == 1':
+                  to:
+                    - key: command-o
+                    - set: emacs_cx = 0
                 'emacs_set_mark == 1':
                   to:
                     - key: S-right_arrow
@@ -132,6 +139,24 @@ rules:
                 'emacs_set_mark == 0':
                   to:
                     - key: page_up
+            - from:
+                key: A-S-comma
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-command-up_arrow
+                'emacs_set_mark == 0':
+                  to:
+                    - key: command-up_arrow
+            - from:
+                key: A-S-period
+              switch:
+                'emacs_set_mark == 1':
+                  to:
+                    - key: S-command-down_arrow
+                'emacs_set_mark == 0':
+                  to:
+                    - key: command-down_arrow
             # Copy/Paste
             - from:
                 key: A-w
@@ -172,10 +197,22 @@ rules:
                 - key: delete_or_backspace
                 - set: emacs_set_mark = 0
             - from:
-                key: C-slash
+                key: C-d
               to:
-                - key: command-z
+                - key: delete_forward
                 - set: emacs_set_mark = 0
+            - from:
+                key: C-slash
+              switch:
+                'emacs_cg == 0':
+                  to:
+                    - key: command-z
+                    - set: emacs_set_mark = 0
+                'emacs_cg == 1':
+                  to:
+                    - key: command-S-z
+                    - set: emacs_set_mark = 0
+                    - set: emacs_cg = 0
             - from:
                 key: C-s
               to:
@@ -188,6 +225,17 @@ rules:
                 'emacs_cx == 0':
                   to:
                     - key: command-f
+            - from:
+                key: h
+              switch:
+                'emacs_cx == 1':
+                  to:
+                    - key: command-a
+                    - set: emacs_set_cx = 0
+                    - set: emacs_set_mark = 0
+                'emacs_cx == 0':
+                  to:
+                    - key: h
             - from:
                 key: C-m
               to:
