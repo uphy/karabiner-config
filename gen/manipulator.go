@@ -54,6 +54,20 @@ func generateManipulatorsRaw(ctx *ScopeContext, manipulatorConfig *config.Manipu
 		}
 		m["from"] = from
 	}
+	// move 'delayed' 'to' to the 'to_delayed_action'
+	for i := len(merged.To) - 1; i >= 0; i-- {
+		t := merged.To[i]
+		if t.Delayed != nil && *t.Delayed {
+			// remove 'to'
+			merged.To = append(merged.To[:i], merged.To[i+1:]...)
+			if merged.ToDelayedAction == nil {
+				merged.ToDelayedAction = new(config.DelayedActionConfig)
+			}
+			// insert the 'to' to the head of existing 'to_delayed_action'
+			merged.ToDelayedAction.ToIfCanceled = append([]config.ToConfig{t}, merged.ToDelayedAction.ToIfCanceled...)
+			merged.ToDelayedAction.ToIfInvoked = append([]config.ToConfig{t}, merged.ToDelayedAction.ToIfInvoked...)
+		}
+	}
 	if err := generateTos(ctx, merged.To, m, "to"); err != nil {
 		return nil, err
 	}

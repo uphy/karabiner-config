@@ -196,6 +196,7 @@ rules:
               to:
                 - key: delete_or_backspace
                 - set: emacs_set_mark = 0
+                  delayed: true
             - from:
                 key: C-d
               to:

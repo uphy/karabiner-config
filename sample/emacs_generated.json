@@ -1404,14 +1404,26 @@
                "to": [
                   {
                      "key_code": "delete_or_backspace"
-                  },
-                  {
-                     "set_variable": {
-                        "name": "emacs_set_mark",
-                        "value": 0
-                     }
                   }
                ],
+               "to_delayed_action": {
+                  "to_if_canceled": [
+                     {
+                        "set_variable": {
+                           "name": "emacs_set_mark",
+                           "value": 0
+                        }
+                     }
+                  ],
+                  "to_if_invoked": [
+                     {
+                        "set_variable": {
+                           "name": "emacs_set_mark",
+                           "value": 0
+                        }
+                     }
+                  ]
+               },
                "type": "basic"
             },
             {

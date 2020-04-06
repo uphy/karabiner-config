@@ -18,20 +18,21 @@ type (
 		Manipulators []ManipulatorConfig `yaml:"manipulators,omitempty"`
 	}
 	ManipulatorConfig struct {
-		From            *FromConfig `yaml:"from,omitempty"`
-		To              []ToConfig  `yaml:"to,omitempty"`
-		ToIfAlone       []ToConfig  `yaml:"to_if_alone,omitempty"`
-		ToIfHeldDown    []ToConfig  `yaml:"to_if_held_down,omitempty"`
-		ToAfterKeyUp    []ToConfig  `yaml:"to_after_key_up,omitempty"`
-		ToDelayedAction *struct {
-			ToIfInvoked  []ToConfig `yaml:"to_if_invoked,omitempty"`
-			ToIfCanceled []ToConfig `yaml:"to_if_canceled,omitempty"`
-		} `yaml:"to_delayed_action,omitempty"`
-		Conditions []ConditionConfig `yaml:"conditions,omitempty"`
-		Parameters Parameters        `yaml:"parameters,omitempty"`
+		From            *FromConfig          `yaml:"from,omitempty"`
+		To              []ToConfig           `yaml:"to,omitempty"`
+		ToIfAlone       []ToConfig           `yaml:"to_if_alone,omitempty"`
+		ToIfHeldDown    []ToConfig           `yaml:"to_if_held_down,omitempty"`
+		ToAfterKeyUp    []ToConfig           `yaml:"to_after_key_up,omitempty"`
+		ToDelayedAction *DelayedActionConfig `yaml:"to_delayed_action,omitempty"`
+		Conditions      []ConditionConfig    `yaml:"conditions,omitempty"`
+		Parameters      Parameters           `yaml:"parameters,omitempty"`
 
 		Scope  *ScopeConfig                 `yaml:"scope,omitempty"`
 		Switch map[string]ManipulatorConfig `yaml:"switch,omitempty"`
+	}
+	DelayedActionConfig struct {
+		ToIfInvoked  []ToConfig `yaml:"to_if_invoked,omitempty"`
+		ToIfCanceled []ToConfig `yaml:"to_if_canceled,omitempty"`
 	}
 	FromConfig struct {
 		// keys: https://github.com/pqrs-org/Karabiner-Elements/blob/master/src/apps/PreferencesWindow/Resources/simple_modifications.json
@@ -79,8 +80,9 @@ type (
 		Halt                 *bool            `yaml:"halt,omitempty"`
 		HoldDownMilliseconds *int             `yaml:"hold_down_milliseconds,omitempty"`
 
-		Key *string `yaml:"key,omitempty"`
-		Set *string `yaml:"set,omitempty"`
+		Key     *string `yaml:"key,omitempty"`
+		Set     *string `yaml:"set,omitempty"`
+		Delayed *bool   `yaml:"delayed,omitempty"`
 	}
 	InputSourceConfig struct {
 		Language      *string `yaml:"language"`
@@ -149,7 +151,15 @@ func (c *RootConfig) Save(file string) error {
 }
 
 func (m *ManipulatorConfig) Merge(override *ManipulatorConfig) *ManipulatorConfig {
+	// copy struct
 	merged := *m
+	// deep copy as needed
+	if d := merged.ToDelayedAction; d != nil {
+		// for realize 'delayed', copy struct
+		merged.ToDelayedAction = d.clone()
+	}
+
+	// start merging
 	merged.Conditions = append(merged.Conditions, override.Conditions...)
 	if v := override.From; v != nil {
 		merged.From = v
@@ -178,4 +188,9 @@ func (m *ManipulatorConfig) Merge(override *ManipulatorConfig) *ManipulatorConfi
 		}
 	}
 	return &merged
+}
+
+func (a *DelayedActionConfig) clone() *DelayedActionConfig {
+	var c = *a
+	return &c
 }

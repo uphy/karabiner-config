@@ -36,7 +36,6 @@ func WatchFile(file string, onChange WatchFunc) error {
 	}()
 
 	watcher.Add(file)
-	onChange()
 	if err != nil {
 		log.Fatal(err)
 	}

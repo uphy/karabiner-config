@@ -15,6 +15,7 @@ Generate karabiner-Elements configuration file with simple syntax.
   - Condition based on variable
   - Condition based on frontmost application
 - In `manipulator` configuration switch
+- Delayed `to`
 
 ## Installation
 
@@ -103,3 +104,5 @@ But there are some improvements.
 #### Condition based on frontmost application
 
 ### In `manipulator` configuration switch
+
+### Delayed `to`
