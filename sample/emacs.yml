@@ -163,34 +163,31 @@ rules:
               to:
                 - key: command-c
                 - set: emacs_set_mark = 0
+                - set: emacs_killring = 0
                 - key: right_arrow
             - from:
                 key: C-y
-              to:
-                - key: command-v
-                - set: emacs_set_mark = 0
+              switch:
+                'emacs_killring == 1':
+                  to:
+                    - key: C-y
+                    - set: emacs_set_mark = 0
+                'emacs_killring == 0':
+                  to:
+                    - key: command-v
+                    - set: emacs_set_mark = 0
             - from:
                 key: C-w
               to:
                 - key: command-x
                 - set: emacs_set_mark = 0
+                - set: emacs_killring = 0
             - from:
                 key: C-k
               to:
-                - key: S-C-e
-                - key: command-x
-                - set: emacs_set_mark = 0
-              switch:
-                'emacs_ck == 0':
-                  to:
-                    - set: 'emacs_ck = 1'
-                'emacs_ck == 1':
-                  to:
-                    - key: C-d
-                    - set: 'emacs_ck = 0'
-              to_delayed_action:
-                to_if_invoked:
-                  - set: 'emacs_ck = 0'
+                - key: C-k
+                - set: emacs_killring = 1
+                  delayed: true
             # misc
             - from:
                 key: C-h

@@ -1284,12 +1284,6 @@
                   },
                   {
                      "set_variable": {
-                        "name": "emacs_set_mark",
-                        "value": 0
-                     }
-                  },
-                  {
-                     "set_variable": {
                         "name": "emacs_ck",
                         "value": 1
                      }
@@ -1350,12 +1344,6 @@
                      "modifiers": [
                         "command"
                      ]
-                  },
-                  {
-                     "set_variable": {
-                        "name": "emacs_set_mark",
-                        "value": 0
-                     }
                   },
                   {
                      "key_code": "d",
