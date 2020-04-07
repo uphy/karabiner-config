@@ -187,6 +187,7 @@ rules:
                 'emacs_ck == 1':
                   to:
                     - key: C-d
+                    - set: 'emacs_ck = 0'
               to_delayed_action:
                 to_if_invoked:
                   - set: 'emacs_ck = 0'
@@ -202,6 +203,7 @@ rules:
               to:
                 - key: delete_forward
                 - set: emacs_set_mark = 0
+                  delayed: true
             - from:
                 key: C-slash
               switch:
@@ -237,6 +239,17 @@ rules:
                 'emacs_cx == 0':
                   to:
                     - key: h
+            - from:
+                key: u
+              switch:
+                'emacs_cx == 1':
+                  to:
+                    - key: command-z
+                    - set: emacs_set_cx = 0
+                    - set: emacs_set_mark = 0
+                'emacs_cx == 0':
+                  to:
+                    - key: u
             - from:
                 key: C-m
               to:
