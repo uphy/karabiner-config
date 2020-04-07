@@ -16,6 +16,7 @@ Generate karabiner-Elements configuration file with simple syntax.
   - Condition based on frontmost application
 - In `manipulator` configuration switch
 - Delayed `to`
+- Tag-based manipulator management
 
 ## Installation
 
@@ -106,3 +107,5 @@ But there are some improvements.
 ### In `manipulator` configuration switch
 
 ### Delayed `to`
+
+### Tag-based manipulator management

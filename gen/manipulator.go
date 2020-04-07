@@ -284,7 +284,7 @@ func generateTo(ctx *ScopeContext, toConfig *config.ToConfig) (JSONObject, error
 }
 
 func generateScope(ctx *ScopeContext, scopeConfig *config.ScopeConfig) ([]JSONObject, error) {
-	childCtx := ctx.ChildScope(scopeConfig)
+	childCtx := ctx.ChildScope(scopeConfig.Conditions)
 	manipulators := make([]JSONObject, 0)
 	for _, childConfig := range scopeConfig.Children {
 		m, err := generateManipulators(childCtx, &childConfig)

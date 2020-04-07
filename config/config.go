@@ -9,13 +9,18 @@ import (
 
 type (
 	RootConfig struct {
-		Title       string       `yaml:"title"`
-		Maintainers []string     `yaml:"maintainers,omitempty"`
-		Rules       []RuleConfig `yaml:"rules,omitempty"`
+		Title        string              `yaml:"title"`
+		Maintainers  []string            `yaml:"maintainers,omitempty"`
+		Rules        []RuleConfig        `yaml:"rules,omitempty"`
+		Manipulators []ManipulatorConfig `yaml:"manipulators,omitempty"`
 	}
 	RuleConfig struct {
 		Description  *string             `yaml:"description,omitempty"`
 		Manipulators []ManipulatorConfig `yaml:"manipulators,omitempty"`
+
+		Includes   []string          `yaml:"includes,omitempty"`
+		Excludes   []string          `yaml:"excludes,omitempty"`
+		Conditions []ConditionConfig `yaml:"conditions,omitempty"`
 	}
 	ManipulatorConfig struct {
 		From            *FromConfig          `yaml:"from,omitempty"`
@@ -29,6 +34,7 @@ type (
 
 		Scope  *ScopeConfig                 `yaml:"scope,omitempty"`
 		Switch map[string]ManipulatorConfig `yaml:"switch,omitempty"`
+		Tags   []string                     `yaml:"tags,omitempty"`
 	}
 	DelayedActionConfig struct {
 		ToIfInvoked  []ToConfig `yaml:"to_if_invoked,omitempty"`

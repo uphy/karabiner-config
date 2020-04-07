@@ -10,6 +10,13 @@ func GenerateObject(c *config.RootConfig) (JSONObject, error) {
 	ctx := newRootScopeContext()
 	root := make(JSONObject)
 	rules := make(JSONArray, 0)
+	for _, manipulatorConfig := range c.Manipulators {
+		tags := manipulatorConfig.Tags
+		if len(tags) == 0 {
+			tags = append(tags, "default")
+		}
+		ctx.BindManipulators(&manipulatorConfig, tags)
+	}
 	for _, ruleConfig := range c.Rules {
 		rule, err := generateRule(ctx, &ruleConfig)
 		if err != nil {
@@ -34,8 +41,12 @@ func Generate(c *config.RootConfig, writer io.Writer) error {
 func generateRule(ctx *ScopeContext, ruleConfig *config.RuleConfig) (JSONObject, error) {
 	rule := make(JSONObject, 0)
 	manipulators := make(JSONArray, 0)
-	for _, manipulatorConfig := range ruleConfig.Manipulators {
-		m, err := generateManipulators(ctx, &manipulatorConfig)
+	ruleContext := ctx.ChildScope(ruleConfig.Conditions)
+
+	// load manipulators for this rule
+	manipulatorConfigs := append(ruleConfig.Manipulators, ruleContext.ManipulatorsFor(ruleConfig.Includes, ruleConfig.Excludes)...)
+	for _, manipulatorConfig := range manipulatorConfigs {
+		m, err := generateManipulators(ruleContext, &manipulatorConfig)
 		if err != nil {
 			return nil, err
 		}

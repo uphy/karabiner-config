@@ -4,7 +4,7 @@
    ],
    "rules": [
       {
-         "description": "Emacs",
+         "description": "Emacs keybinding for general apps",
          "manipulators": [
             {
                "conditions": [
@@ -1151,48 +1151,13 @@
                      }
                   },
                   {
-                     "key_code": "right_arrow"
-                  }
-               ],
-               "type": "basic"
-            },
-            {
-               "conditions": [
-                  {
-                     "bundle_identifiers": [
-                        "^com\\.jetbrains\\.intellij$",
-                        "^org\\.gnu\\.Emacs$",
-                        "^com\\.apple\\.Terminal$",
-                        "^com\\.googlecode\\.iterm2$",
-                        "^org\\.vim\\.",
-                        "^org\\.x\\.X11$",
-                        "^com\\.apple\\.x11$",
-                        "^org\\.macports\\.X11$",
-                        "^com\\.microsoft\\.VSCode$"
-                     ],
-                     "type": "frontmost_application_unless"
-                  }
-               ],
-               "from": {
-                  "key_code": "y",
-                  "modifiers": {
-                     "mandatory": [
-                        "control"
-                     ]
-                  }
-               },
-               "to": [
-                  {
-                     "key_code": "v",
-                     "modifiers": [
-                        "command"
-                     ]
-                  },
-                  {
                      "set_variable": {
-                        "name": "emacs_set_mark",
+                        "name": "emacs_killring",
                         "value": 0
                      }
+                  },
+                  {
+                     "key_code": "right_arrow"
                   }
                ],
                "type": "basic"
@@ -1234,134 +1199,14 @@
                         "name": "emacs_set_mark",
                         "value": 0
                      }
-                  }
-               ],
-               "type": "basic"
-            },
-            {
-               "conditions": [
-                  {
-                     "name": "emacs_ck",
-                     "type": "variable_if",
-                     "value": 0
-                  },
-                  {
-                     "bundle_identifiers": [
-                        "^com\\.jetbrains\\.intellij$",
-                        "^org\\.gnu\\.Emacs$",
-                        "^com\\.apple\\.Terminal$",
-                        "^com\\.googlecode\\.iterm2$",
-                        "^org\\.vim\\.",
-                        "^org\\.x\\.X11$",
-                        "^com\\.apple\\.x11$",
-                        "^org\\.macports\\.X11$",
-                        "^com\\.microsoft\\.VSCode$"
-                     ],
-                     "type": "frontmost_application_unless"
-                  }
-               ],
-               "from": {
-                  "key_code": "k",
-                  "modifiers": {
-                     "mandatory": [
-                        "control"
-                     ]
-                  }
-               },
-               "to": [
-                  {
-                     "key_code": "e",
-                     "modifiers": [
-                        "shift",
-                        "control"
-                     ]
-                  },
-                  {
-                     "key_code": "x",
-                     "modifiers": [
-                        "command"
-                     ]
                   },
                   {
                      "set_variable": {
-                        "name": "emacs_ck",
-                        "value": 1
+                        "name": "emacs_killring",
+                        "value": 0
                      }
                   }
                ],
-               "to_delayed_action": {
-                  "to_if_invoked": [
-                     {
-                        "set_variable": {
-                           "name": "emacs_ck",
-                           "value": 0
-                        }
-                     }
-                  ]
-               },
-               "type": "basic"
-            },
-            {
-               "conditions": [
-                  {
-                     "name": "emacs_ck",
-                     "type": "variable_if",
-                     "value": 1
-                  },
-                  {
-                     "bundle_identifiers": [
-                        "^com\\.jetbrains\\.intellij$",
-                        "^org\\.gnu\\.Emacs$",
-                        "^com\\.apple\\.Terminal$",
-                        "^com\\.googlecode\\.iterm2$",
-                        "^org\\.vim\\.",
-                        "^org\\.x\\.X11$",
-                        "^com\\.apple\\.x11$",
-                        "^org\\.macports\\.X11$",
-                        "^com\\.microsoft\\.VSCode$"
-                     ],
-                     "type": "frontmost_application_unless"
-                  }
-               ],
-               "from": {
-                  "key_code": "k",
-                  "modifiers": {
-                     "mandatory": [
-                        "control"
-                     ]
-                  }
-               },
-               "to": [
-                  {
-                     "key_code": "e",
-                     "modifiers": [
-                        "shift",
-                        "control"
-                     ]
-                  },
-                  {
-                     "key_code": "x",
-                     "modifiers": [
-                        "command"
-                     ]
-                  },
-                  {
-                     "key_code": "d",
-                     "modifiers": [
-                        "control"
-                     ]
-                  }
-               ],
-               "to_delayed_action": {
-                  "to_if_invoked": [
-                     {
-                        "set_variable": {
-                           "name": "emacs_ck",
-                           "value": 0
-                        }
-                     }
-                  ]
-               },
                "type": "basic"
             },
             {
@@ -1442,14 +1287,26 @@
                "to": [
                   {
                      "key_code": "delete_forward"
-                  },
-                  {
-                     "set_variable": {
-                        "name": "emacs_set_mark",
-                        "value": 0
-                     }
                   }
                ],
+               "to_delayed_action": {
+                  "to_if_canceled": [
+                     {
+                        "set_variable": {
+                           "name": "emacs_set_mark",
+                           "value": 0
+                        }
+                     }
+                  ],
+                  "to_if_invoked": [
+                     {
+                        "set_variable": {
+                           "name": "emacs_set_mark",
+                           "value": 0
+                        }
+                     }
+                  ]
+               },
                "type": "basic"
             },
             {
@@ -1733,6 +1590,87 @@
             {
                "conditions": [
                   {
+                     "name": "emacs_cx",
+                     "type": "variable_if",
+                     "value": 0
+                  },
+                  {
+                     "bundle_identifiers": [
+                        "^com\\.jetbrains\\.intellij$",
+                        "^org\\.gnu\\.Emacs$",
+                        "^com\\.apple\\.Terminal$",
+                        "^com\\.googlecode\\.iterm2$",
+                        "^org\\.vim\\.",
+                        "^org\\.x\\.X11$",
+                        "^com\\.apple\\.x11$",
+                        "^org\\.macports\\.X11$",
+                        "^com\\.microsoft\\.VSCode$"
+                     ],
+                     "type": "frontmost_application_unless"
+                  }
+               ],
+               "from": {
+                  "key_code": "u",
+                  "modifiers": {}
+               },
+               "to": [
+                  {
+                     "key_code": "u"
+                  }
+               ],
+               "type": "basic"
+            },
+            {
+               "conditions": [
+                  {
+                     "name": "emacs_cx",
+                     "type": "variable_if",
+                     "value": 1
+                  },
+                  {
+                     "bundle_identifiers": [
+                        "^com\\.jetbrains\\.intellij$",
+                        "^org\\.gnu\\.Emacs$",
+                        "^com\\.apple\\.Terminal$",
+                        "^com\\.googlecode\\.iterm2$",
+                        "^org\\.vim\\.",
+                        "^org\\.x\\.X11$",
+                        "^com\\.apple\\.x11$",
+                        "^org\\.macports\\.X11$",
+                        "^com\\.microsoft\\.VSCode$"
+                     ],
+                     "type": "frontmost_application_unless"
+                  }
+               ],
+               "from": {
+                  "key_code": "u",
+                  "modifiers": {}
+               },
+               "to": [
+                  {
+                     "key_code": "z",
+                     "modifiers": [
+                        "command"
+                     ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_cx",
+                        "value": 0
+                     }
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  }
+               ],
+               "type": "basic"
+            },
+            {
+               "conditions": [
+                  {
                      "name": "emacs_set_mark",
                      "type": "variable_if",
                      "value": 0
@@ -1820,7 +1758,299 @@
                "type": "basic"
             }
          ]
+      },
+      {
+         "description": "Emacs keybinding for kill-ring not supported apps",
+         "manipulators": [
+            {
+               "conditions": [
+                  {
+                     "bundle_identifiers": [
+                        "^net\\.cozic\\.joplin\\-desktop$"
+                     ],
+                     "type": "frontmost_application_if"
+                  }
+               ],
+               "from": {
+                  "key_code": "y",
+                  "modifiers": {
+                     "mandatory": [
+                        "control"
+                     ]
+                  }
+               },
+               "to": [
+                  {
+                     "key_code": "v",
+                     "modifiers": [
+                        "command"
+                     ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  }
+               ],
+               "type": "basic"
+            },
+            {
+               "conditions": [
+                  {
+                     "name": "emacs_ck",
+                     "type": "variable_if",
+                     "value": 0
+                  },
+                  {
+                     "bundle_identifiers": [
+                        "^net\\.cozic\\.joplin\\-desktop$"
+                     ],
+                     "type": "frontmost_application_if"
+                  }
+               ],
+               "from": {
+                  "key_code": "k",
+                  "modifiers": {
+                     "mandatory": [
+                        "control"
+                     ]
+                  }
+               },
+               "to": [
+                  {
+                     "key_code": "e",
+                     "modifiers": [
+                        "shift",
+                        "control"
+                     ]
+                  },
+                  {
+                     "key_code": "x",
+                     "modifiers": [
+                        "command"
+                     ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_ck",
+                        "value": 1
+                     }
+                  }
+               ],
+               "to_delayed_action": {
+                  "to_if_invoked": [
+                     {
+                        "set_variable": {
+                           "name": "emacs_ck",
+                           "value": 0
+                        }
+                     }
+                  ]
+               },
+               "type": "basic"
+            },
+            {
+               "conditions": [
+                  {
+                     "name": "emacs_ck",
+                     "type": "variable_if",
+                     "value": 1
+                  },
+                  {
+                     "bundle_identifiers": [
+                        "^net\\.cozic\\.joplin\\-desktop$"
+                     ],
+                     "type": "frontmost_application_if"
+                  }
+               ],
+               "from": {
+                  "key_code": "k",
+                  "modifiers": {
+                     "mandatory": [
+                        "control"
+                     ]
+                  }
+               },
+               "to": [
+                  {
+                     "key_code": "e",
+                     "modifiers": [
+                        "shift",
+                        "control"
+                     ]
+                  },
+                  {
+                     "key_code": "x",
+                     "modifiers": [
+                        "command"
+                     ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  },
+                  {
+                     "key_code": "d",
+                     "modifiers": [
+                        "control"
+                     ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_ck",
+                        "value": 0
+                     }
+                  }
+               ],
+               "to_delayed_action": {
+                  "to_if_invoked": [
+                     {
+                        "set_variable": {
+                           "name": "emacs_ck",
+                           "value": 0
+                        }
+                     }
+                  ]
+               },
+               "type": "basic"
+            }
+         ]
+      },
+      {
+         "description": "Emacs keybinding for kill-ring supported",
+         "manipulators": [
+            {
+               "conditions": [
+                  {
+                     "name": "emacs_killring",
+                     "type": "variable_if",
+                     "value": 0
+                  },
+                  {
+                     "bundle_identifiers": [
+                        "^com\\.google\\.Chrome$"
+                     ],
+                     "type": "frontmost_application_if"
+                  }
+               ],
+               "from": {
+                  "key_code": "y",
+                  "modifiers": {
+                     "mandatory": [
+                        "control"
+                     ]
+                  }
+               },
+               "to": [
+                  {
+                     "key_code": "v",
+                     "modifiers": [
+                        "command"
+                     ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  }
+               ],
+               "type": "basic"
+            },
+            {
+               "conditions": [
+                  {
+                     "name": "emacs_killring",
+                     "type": "variable_if",
+                     "value": 1
+                  },
+                  {
+                     "bundle_identifiers": [
+                        "^com\\.google\\.Chrome$"
+                     ],
+                     "type": "frontmost_application_if"
+                  }
+               ],
+               "from": {
+                  "key_code": "y",
+                  "modifiers": {
+                     "mandatory": [
+                        "control"
+                     ]
+                  }
+               },
+               "to": [
+                  {
+                     "key_code": "y",
+                     "modifiers": [
+                        "control"
+                     ]
+                  },
+                  {
+                     "set_variable": {
+                        "name": "emacs_set_mark",
+                        "value": 0
+                     }
+                  }
+               ],
+               "type": "basic"
+            },
+            {
+               "conditions": [
+                  {
+                     "bundle_identifiers": [
+                        "^com\\.google\\.Chrome$"
+                     ],
+                     "type": "frontmost_application_if"
+                  }
+               ],
+               "from": {
+                  "key_code": "k",
+                  "modifiers": {
+                     "mandatory": [
+                        "control"
+                     ]
+                  }
+               },
+               "to": [
+                  {
+                     "key_code": "k",
+                     "modifiers": [
+                        "control"
+                     ]
+                  }
+               ],
+               "to_delayed_action": {
+                  "to_if_canceled": [
+                     {
+                        "set_variable": {
+                           "name": "emacs_killring",
+                           "value": 1
+                        }
+                     }
+                  ],
+                  "to_if_invoked": [
+                     {
+                        "set_variable": {
+                           "name": "emacs_killring",
+                           "value": 1
+                        }
+                     }
+                  ]
+               },
+               "type": "basic"
+            }
+         ]
       }
    ],
-   "title": "Emacs"
+   "title": "Emacs keybinding"
 }
