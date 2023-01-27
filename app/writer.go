@@ -50,10 +50,10 @@ func (w *KarabinierJSONWriter) ReplaceRule(original gen.JSONObject, generated ge
 			c := p["complex_modifications"].(map[string]interface{})
 			c["rules"] = generated["rules"]
 			p["complex_modifications"] = c
+			break
 		}
 		profiles[i] = p
 		found = true
-		break
 	}
 	if !found {
 		return nil, errors.New("profile not found in karabiner.json")

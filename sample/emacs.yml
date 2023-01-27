@@ -26,6 +26,7 @@ rules:
       - app_if:
           identifiers:
             - ^net\.cozic\.joplin\-desktop$
+            - ^md\.obsidian$
   - description: Emacs keybinding for kill-ring supported
     includes:
       - killring-supported

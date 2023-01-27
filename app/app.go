@@ -27,6 +27,9 @@ func New() *CLI {
 			Name:  "p,profile",
 			Value: "Default profile",
 		},
+		cli.BoolFlag{
+			Name: "k,karabiner",
+		},
 	}
 	app.Name = "karabiner-config"
 	app.Usage = "Karabiner Config File Generator"
@@ -35,13 +38,21 @@ func New() *CLI {
 	app.Action = func(ctx *cli.Context) error {
 		watch := ctx.Bool("watch")
 		profile := ctx.String("profile")
+
 		if ctx.NArg() != 2 {
 			return errors.New("specify input, output as arguments")
 		}
 		input := ctx.Args().Get(0)
 		output := ctx.Args().Get(1)
 		_, filename := filepath.Split(output)
-		karabinerMode := filename == "karabiner.json"
+
+		var karabinerMode bool
+		if ctx.IsSet("karabiner") {
+			karabinerMode = ctx.Bool("karabiner")
+		} else {
+			karabinerMode = filename == "karabiner.json"
+		}
+
 		var writer ConfigWriter
 		if karabinerMode {
 			writer = &KarabinierJSONWriter{output, profile}
